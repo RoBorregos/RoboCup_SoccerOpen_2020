@@ -4,10 +4,10 @@ class Movements
 {
 public:
   //Motors initialization.
-  front_left_motor_ = Motor(frontLeftMotorPins[0], frontLeftMotorPins[1], frontLeftPwm);
-  front_right_motor_ = Motor(frontRightMotorPins[0], frontRightMotorPins[1], frontRightPwm);
-  back_left_motor_ = Motor(backLeftMotorPins[0], backLeftMotorPins[1], backLeftPwm);
-  back_Right_motor_ = Motor(backRightMotorPins[0], backRightMotorPins[1], backRightPwm);
+  Motor front_left_motor_;
+  Motor front_right_motor_;
+  Motor back_left_motor_;
+  Motor back_Right_motor_;
 
   Movements();
   //Move in 8 standard angles.

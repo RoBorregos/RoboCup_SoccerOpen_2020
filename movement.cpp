@@ -1,6 +1,14 @@
 #include "Movement.h"
 #include "Pixy.h"
 
+Movements::Movements()
+{
+  front_left_motor_ = Motor(frontLeftMotorPins[0], frontLeftMotorPins[1], frontLeftPwm);
+  front_right_motor_ = Motor(frontRightMotorPins[0], frontRightMotorPins[1], frontRightPwm);
+  back_left_motor_ = Motor(backLeftMotorPins[0], backLeftMotorPins[1], backLeftPwm);
+  back_Right_motor_ = Motor(backRightMotorPins[0], backRightMotorPins[1], backRightPwm);
+}
+
 void Movements::move0()
 {
   setSpeed(230.0);
@@ -141,7 +149,7 @@ void Movements::angleMovement(int angle)
   float pwmM2M4 = 230 * cos(gradRadian);
   //If the pwm is negative, this bools will be used to tell the motor to go backwards.
   bool orientationM1M3 = 0, orientationM2M4 = 0;
-
+  
   //If pwm is negative, the value of the bools changes to true, and the pwm is inverted.
   if (pwmM1M3 < 0)
   {
@@ -212,32 +220,32 @@ void Movements::followBall()
 
   int caso = -1;
 
-  if (((pixy_.pelotaX > 125) && (pixy_.pelotaX < 150)) && pixy_.pelotaY < 25)
+  if (((pixy.pelotaX > 125) && (pixy.pelotaX < 150)) && pixy.pelotaY < 25)
   {
     caso = 0;
   }
-  else if ((pixy_.pelotaX > 135) && (pixy_.pelotaX < 185))
+  else if ((pixy.pelotaX > 135) && (pixy.pelotaX < 185))
   {
     caso = 1;
   }
-  else if (pixy_.pelotaX > 185)
+  else if (pixy.pelotaX > 185)
   {
-    if (pixy_.pelotaY > 120)
+    if (pixy.pelotaY > 120)
     {
       caso = 2;
     }
-    else if (pixy_.pelotaY < 120)
+    else if (pixy.pelotaY < 120)
     {
       caso = 4;
     }
   }
-  else if (pixy_.pelotaX < 135)
+  else if (pixy.pelotaX < 135)
   {
-    if (pixy_.pelotaY > 120)
+    if (pixy.pelotaY > 120)
     {
       caso = 3;
     }
-    else if (pixy_.pelotaY < 120)
+    else if (pixy.pelotaY < 120)
     {
       caso = 5;
     }
@@ -247,7 +255,7 @@ void Movements::followBall()
   {
 
   case -1:
-    while (pixy_.pelotaX == -1)
+    while (pixy.pelotaX == -1)
     {
       int m = 0;
       if (m <= 1)
@@ -256,7 +264,7 @@ void Movements::followBall()
         delay(150);
         stop();
         delay(1);
-        pixy_.pixyCam(1);
+        pixy.pixyCam(1);
         m++;
       }
       else
@@ -265,7 +273,7 @@ void Movements::followBall()
         delay(300);
         stop();
         delay(1);
-        pixy_.pixyCam(1);
+        pixy.pixyCam(1);
         m = 0;
       }
     }
@@ -345,9 +353,9 @@ void Movements::strategy1()
         setDirection(45); //Diagonal forward right.
       } else{ //Goal to the right of the image.
         while(onWhiteLine){
-          movement(45); //Diagonal forward right.
+          setDirection(45); //Diagonal forward right.
         }
-        movement(315);//Diagonal forward left.
+        angleMovement(315);//Diagonal forward left.
       }
   } 
 }
@@ -363,16 +371,16 @@ void Movements::strategy2(){
   
   int action = -1;
   bool possession = 0;
-  pixyCam(2);
+  pixy.pixyCam(2);
 
-  if(blueGoalX != -1){
-    if(blueGoalX < 135){
+  if(pixy.blueGoalX != -1){
+    if(pixy.blueGoalX < 135){
       action = 1;
     }
-    if(blueGoalX > 185){
+    if(pixy.blueGoalX > 185){
       action = 2;
     }
-    if((blueGoalX > 135) && (blueGoalX < 185)){
+    if((pixy.blueGoalX > 135) && (pixy.blueGoalX < 185)){
       action = 3;
     }
   } else {
@@ -387,7 +395,7 @@ void Movements::strategy2(){
       break;
 
     case 1:
-      while (blueGoalX < 135)
+      while (pixy.blueGoalX < 135)
       {
         setDirection(0);
         delay(20);
@@ -398,12 +406,12 @@ void Movements::strategy2(){
         delay(15);
         stop();
         delay(1);
-        pixyCam(2);
+        pixy.pixyCam(2);
       }
       break;
 
     case 2:
-      while (blueGoalX > 185)
+      while (pixy.blueGoalX > 185)
       {
         setDirection(0);
         delay(20);
@@ -414,18 +422,18 @@ void Movements::strategy2(){
         delay(15);
         stop();
         delay(1);
-        pixyCam(2);
+        pixy.pixyCam(2);
       }
       break;
 
     case 3:
-      while ((blueGoalX > 135) && (blueGoalX < 185))
+      while ((pixy.blueGoalX > 135) && (pixy.blueGoalX < 185))
       {
         setDirection(0);
         delay(30);
         stop();
         delay(1);
-        pixyCam(2);
+        pixy.pixyCam(2);
       }
       break;
     }

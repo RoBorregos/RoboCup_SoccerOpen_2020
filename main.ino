@@ -1,22 +1,18 @@
-#include "bno.h"
-#include "motor.h"
-#include "movement.h"
-#include "pixy.h"
+#include "Bno.h"
+#include "Motor.h"
+#include "Movement.h"
+#include "Pixy.h"
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 
 void setup()
 {
-    Bno bno_sensor1;
+    Bno bno;
     Movements robot;
-}
-
-void loop()
-{
-    bno_sensor1.checkAngle();
-    bno_sensor1.checkLift();
-    robot.movement(0);
+    bno.checkAngle();
+    bno.checkLift();
+    robot.setDirection(0);
     delay(100);
     robot.stop();
     delay(100);
@@ -24,4 +20,8 @@ void loop()
     delay(100);
     robot.stop();
     delay(100);
+}
+
+void loop()
+{
 }

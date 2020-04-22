@@ -1,6 +1,6 @@
 #include "Pixy.h"
 
-Pixy::pixy()
+Pixy::Pixy()
 {
   pixy_ = Pixy2 pixy;
 }
@@ -27,55 +27,55 @@ void Pixy::pixyCam(int object)
   case -1:
     if (object == 1)
     { //The ball wasn't found.
-      pixy_.ballX = -1;
-      pixy_.ballY = -1;
+      ballX = -1;
+      ballY = -1;
       Serial.println("BALL was not detected");
     }
     if (object == 2)
     { //Blue goal wasn't found.
-      pixy_.blueGoalX = -1;
-      pixy_.blueGoalY = -1;
+      blueGoalX = -1;
+      blueGoalY = -1;
       Serial.println("BLUE GOAL was not detected");
     }
     if (object == 3)
     { //Yellow goal wasn't found.
-      pixy_.yellGoalX = -1;
-      pixy_.yellGoalY = -1;
+      yellGoalX = -1;
+      yellGoalY = -1;
       Serial.println("YELLOW GOAL was not detected");
     }
     break;
 
   case 0: //Ball found, the coordinates will update.
-    pixy_.lastBallX = pixy_.ballX;
-    pixy_.lastBallY = pixy_.ballY;
-    pixy_.ballX = int(pixy.ccc.blocks[j].m_x);
-    pixy_.ballY = int(pixy.ccc.blocks[j].m_y);
+    lastBallX = ballX;
+    lastBallY = ballY;
+    ballX = int(pixy_.ccc.blocks[j].m_x);
+    ballY = int(pixy_.ccc.blocks[j].m_y);
     Serial.print("BALL detected in X: ");
-    Serial.print(pixy_.ballX);
+    Serial.print(ballX);
     Serial.print("  Y: ");
-    Serial.print(pixy_.ballY);
+    Serial.print(ballY);
     Serial.print("  LastX: ");
-    Serial.print(pixy_.lastBallX);
+    Serial.print(lastBallX);
     Serial.print("  LastY: ");
-    Serial.println(pixy_.lastBallY);
+    Serial.println(lastBallY);
     break;
 
   case 1: //Blue goal found, updating coordinates.
-    pixy_.blueGoalX = int(pixy.ccc.blocks[j].m_x);
-    pixy_.blueGoalY = int(pixy.ccc.blocks[j].m_x);
+    blueGoalX = int(pixy_.ccc.blocks[j].m_x);
+    blueGoalY = int(pixy_.ccc.blocks[j].m_x);
     Serial.print("BLUE GOAL detected in X: ");
-    Serial.print(pixy_.blueGoalX);
+    Serial.print(blueGoalX);
     Serial.print("  Y: ");
-    Serial.println(pixy_.blueGoalY);
+    Serial.println(blueGoalY);
     break;
 
   case 2: //Yellow goal found, updating coordinates.
-    pixy_.yellGoalX = int(pixy.ccc.blocks[j].m_x);
-    pixy_.yellGoalY = int(pixy.ccc.blocks[j].m_x);
+    yellGoalX = int(pixy_.ccc.blocks[j].m_x);
+    yellGoalY = int(pixy_.ccc.blocks[j].m_x);
     Serial.print("YELLOW GOAL detected in X: ");
-    Serial.print(pixy_.yellGoalX);
+    Serial.print(yellGoalX);
     Serial.print("  Y: ");
-    Serial.println(pixy_.yellGoalY);
+    Serial.println(yellGoalY);
     break;
   }
 }

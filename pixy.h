@@ -3,7 +3,7 @@
 class Pixy
 {
 public:
-  pixy();
+  Pixy();
   void pixyCam(int objeto);
   void pixyImage();
   int ballX = -1;

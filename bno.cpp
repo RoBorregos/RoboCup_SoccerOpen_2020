@@ -18,7 +18,7 @@ void Bno::checkLift()
 {
     bool lift = 0;
     sensors_event_t event;
-    bno.getEvent(&event);
+    bnoSensor.getEvent(&event);
     int height = event.orientation.y;
     if (height > 10)
     {
