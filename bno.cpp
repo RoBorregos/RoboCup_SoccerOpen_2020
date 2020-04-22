@@ -1,4 +1,4 @@
-#include "bno.h"
+#include "Bno.h"
 
 Bno::Bno()
 {
@@ -11,11 +11,6 @@ void Bno::checkAngle()
     sensors_event_t event;
     bnoSensor.getEvent(&event);
     bnoSensor.angle = event.orientation.x;
-    lcd.clear();
-    lcd.print("Angulo: ");
-    lcd.setCursor(0, 1);
-    lcd.print(angle);
-    lcd.setCursor(0, 0);
 }
 
 //Check if the robot is on or off the ground.

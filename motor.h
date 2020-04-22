@@ -6,7 +6,7 @@ public:
     void forward();
     void backward();
     void stop();
-    void changePwm(int data);
+    void changePwm(float data);
 
 private:
     int motorBackwards;
