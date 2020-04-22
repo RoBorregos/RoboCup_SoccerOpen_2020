@@ -26,7 +26,7 @@ void Motor::backward()
 void Motor::stop()
 {
     digitalWrite(motorForward, LOW);
-    digitalWrite(motorForward, LOW);
+    digitalWrite(motorBackwards, LOW);
 }
 
 void Motor::changePwm(float data)
