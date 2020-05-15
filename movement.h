@@ -16,14 +16,9 @@ public:
   void stop();
   //Move in non standard angles.
   void angleMovement(int angle);
-  //Function used to follow the ball.
-  void followBall();
   //Set a standard pwm for all motors.
   void setSpeed(float data);
   //Pseudocode for the first strategy.
-  void strategy1();
-  //Pseudocode for the second strategy.
-  void strategy2();
 
 private:
   void move0();
