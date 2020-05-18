@@ -1,4 +1,4 @@
-#include "Motor.h"
+#include "motor.h"
 
 class Movements
 {
@@ -7,7 +7,7 @@ public:
   Motor front_left_motor_;
   Motor front_right_motor_;
   Motor back_left_motor_;
-  Motor back_Right_motor_;
+  Motor back_right_motor_;
 
   Movements();
   //Move in 8 standard angles.
@@ -17,8 +17,7 @@ public:
   //Move in non standard angles.
   void angleMovement(int angle);
   //Set a standard pwm for all motors.
-  void setSpeed(float data);
-  //Pseudocode for the first strategy.
+  void setSpeed(int data);
 
 private:
   void move0();
@@ -29,12 +28,12 @@ private:
   void move225();
   void move270();
   void move315();
-  static constexpr int frontLeftMotorPins[2] = {10, 9};   //Pins for the front left motor. First backwards, then forward.
-  static constexpr int frontRightMotorPins[2] = {30, 16}; //Pins for the front right motor. First backwards, then forward.
-  static constexpr int backLeftMotorPins[2] = {11, 12};   //Pins for the back left motor. First backwards, then forward.
-  static constexpr int backRightMotorPins[2] = {18, 17};  //Pins for the back right motor. First backwards, then forward.
-  static constexpr int frontLeftPwm = 5;                  //Pin of the front left motor pwm.
-  static constexpr int frontRightPwm = 8;                 //Pin of the front right motor pwm.
-  static constexpr int backLeftPwm = 13;                  //Pin of the back left motor pwm.
-  static constexpr int backRightPwm = 4;                  //Pin of the back right motor pwm.
+  int frontLeftMotorPins[2] = {10, 9};   //Pins for the front left motor. First backwards, then forward.
+  int frontRightMotorPins[2] = {30, 16}; //Pins for the front right motor. First backwards, then forward.
+  int backLeftMotorPins[2] = {11, 12};   //Pins for the back left motor. First backwards, then forward.
+  int backRightMotorPins[2] = {18, 17};  //Pins for the back right motor. First backwards, then forward.
+  int frontLeftPwm = 5;                  //Pin of the front left motor pwm.
+  int frontRightPwm = 8;                 //Pin of the front right motor pwm.
+  int backLeftPwm = 13;                  //Pin of the back left motor pwm.
+  int backRightPwm = 4;                  //Pin of the back right motor pwm.
 };

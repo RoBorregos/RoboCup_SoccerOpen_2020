@@ -1,4 +1,4 @@
-#include "Motor.h"
+#include "motor.h"
 
 //The space '0' of the array is used to make the robot go backwards. While the space '1' is front.
 Motor::Motor(const int motorBackwards_, const int motorForward_, const int analogPin_)
@@ -6,7 +6,10 @@ Motor::Motor(const int motorBackwards_, const int motorForward_, const int analo
     motorForward = motorBackwards_;
     motorBackwards = motorForward_;
     analogPin = analogPin_;
-    pwm = 230.0;
+    pwm = 230;
+    pinMode(motorForward, OUTPUT);
+    pinMode(motorBackwards, OUTPUT);
+    pinMode(analogPin, OUTPUT); 
 }
 
 void Motor::forward()
@@ -29,7 +32,7 @@ void Motor::stop()
     digitalWrite(motorBackwards, LOW);
 }
 
-void Motor::changePwm(float data)
+void Motor::changePwm(int data)
 {
     pwm = data;
 }

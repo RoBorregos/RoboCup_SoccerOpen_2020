@@ -10,8 +10,7 @@ public:
     void checkLift();
     int angle = 0;
     bool lift = 0;
-};
 
 private:
 Adafruit_BNO055 bnoSensor;
-}
+};

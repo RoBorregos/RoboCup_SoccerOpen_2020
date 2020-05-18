@@ -1,6 +1,12 @@
 #include "strategy.h"
 #include "Pixy.h"
 
+int rightCenterX = 135;
+int leftCenterX = 185;
+int centerX = 155;
+int middleY = 120;
+int ignoreY = 20;
+
 //Constructor for the trategy class.
 Strategy::Strategy()
 {
@@ -11,7 +17,7 @@ Strategy::Strategy()
 void Strategy::followBall()
 {
     /*  
- *  -1 = Ball wasn't detected
+ *  -1 = Ball wasn't detected, the code used for this specific case is not implemented, meaning it is pseudocode.
  *  0 = Possession of ball. This case is used to end the function.
  *  1 = Ball in the middle of the image. In this case the robot should only advance straight forward.
  *  2 = Ball in the top left part of the image.
@@ -23,32 +29,32 @@ void Strategy::followBall()
 
     int caso = -1;
 
-    if (((pixy.ballX > 125) && (pixy.ballX < 150)) && pixy.ballY < 25)
+    if (((pixy.ballX > leftCenterX) && (pixy.ballX < rightCenterX)) && pixy.ballY < ignoreY)
     {
         caso = 0;
     }
-    else if ((pixy.ballX > 135) && (pixy.ballX < 185))
+    else if ((pixy.ballX > leftCenterX) && (pixy.ballX < rightCenterX) && (pixy.ballY > ignoreY))
     {
         caso = 1;
     }
-    else if (pixy.ballX > 185)
+    else if (pixy.ballX > leftCenterX)
     {
-        if (pixy.ballY > 120)
+        if (pixy.ballY > middleY)
         {
             caso = 2;
         }
-        else if (pixy.ballY < 120)
+        else if (pixy.ballY < middleY)
         {
             caso = 4;
         }
     }
-    else if (pixy.ballX < 135)
+    else if (pixy.ballX < rightCenterX)
     {
-        if (pixy.ballY > 120)
+        if (pixy.ballY > middleY)
         {
             caso = 3;
         }
-        else if (pixy.ballY < 120)
+        else if (pixy.ballY < middleY)
         {
             caso = 5;
         }
@@ -58,27 +64,57 @@ void Strategy::followBall()
     {
 
     case -1:
+        int count = 0; //A counter is used to determine the direction of the movement the robot will make. This allows the robot to interruot the function after each movement.
         while (pixy.ballX == -1)
         {
-            int m = 0;
-            if (m <= 1)
-            {
-                robot_.setDirection(90);
-                delay(150);
-                robot_.stop();
-                delay(1);
-                pixy.pixyCam(1);
-                m++;
+            bool backLeftLine = false;  //Bool used to detect if the back Left phototransitor has detected the back left line of the field.
+            bool backRightLine = false; //Bool used to detect if the back Right phototransistor has detected the back right line of the field.
+            bool frontLine = false;     //Bool used to detect if the front phototransistor has detected the middle field line.
+            
+            if(count == 0 && pixy.ballX != 1){ //The first movement is a diagonal back left movement until reaching the field line.
+              while(!backLeftLine){
+               robot_.setDirection(225);
+              }
+              if(backLeftLine){
+               robot_.stop();
+              }
+              pixy.pixycam(1);
+              count++;
             }
-            else
-            {
-                robot_.setDirection(270);
-                delay(300);
+            
+            if(count == 1 && pixy.ballX != 1){ //The next movement is a diagonal front right movement until middle field.
+              while(!frontLine){
+                robot_.setDirection(45);
+              }
+              if(frontLine){
                 robot_.stop();
-                delay(1);
-                pixy.pixyCam(1);
-                m = 0;
+              }
+              pixy.pixycam(1);
+              count++;
             }
+            
+            if(count == 2 && pixy.ballX != 1){ //The third movement is a diagonal back right movement until the back right field line.
+              while(!backRightLine){
+                robot_.setDirection(135);
+              }
+              if(backRightLine){
+                robot_.stop();
+              }
+              pixy.pixycam(1);
+              count++;
+            }
+            
+            if(count ==  3 && pixy.ballX != 1){ //The las movement is a diagonal front left movement until middle field.
+              while(!frontLine){
+                robot_.setDirection(315);
+              }
+              if(frontLine){
+                robot_.stop();
+              }
+              pixy.pixycam(1);
+              count = 0;
+            }
+            
         }
         break;
 
@@ -127,8 +163,8 @@ void Strategy::strategy1()
 {
  /*
  * Cases
- * 1 - The robot doesn't has possession of the ball - 'seguirPelota()' is called
- * 'seguirPelota()' when the robot gains possession of the ball, the next case is called
+ * 1 - The robot doesn't has possession of the ball - 'followBall()' is called
+ * 'followBall()' when the robot gains possession of the ball, the next case is called
  * 2 - The robot has posession of the ball - The robot will make diagonal front movements depending on its location
  * on the field. If the goal is to the left of the image, the robot will make a diagonal right movement, and when it reaches
  * the sideline, it will change to a diagonal left movement.
@@ -150,7 +186,7 @@ void Strategy::strategy1()
         break;
 
     case 2:
-        if (pixy.blueGoalX > 140)
+        if (pixy.blueGoalX > rightCenterImage)
         { //Goal to the left of the image.
             while (onWhiteLine)
             {
@@ -166,6 +202,10 @@ void Strategy::strategy1()
             }
             robot_.angleMovement(315); //Diagonal forward left.
         }
+
+    default:
+      robot_.setDirection(0);
+      break;
     }
 }
 
@@ -248,5 +288,9 @@ void Strategy::strategy2()
             pixy.pixyCam(2);
         }
         break;
+
+    default:
+      robot_.setDirection(0);
+      break;
     }
 }

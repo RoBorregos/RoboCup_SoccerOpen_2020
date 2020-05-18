@@ -2,6 +2,7 @@
 #include "Motor.h"
 #include "Movement.h"
 #include "Pixy.h"
+#include "Strategy.h"
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
@@ -9,17 +10,10 @@
 void setup()
 {
     Bno bno;
-    Movements robot;
+    Strategy robot;
     bno.checkAngle();
     bno.checkLift();
-    robot.setDirection(0);
-    delay(100);
-    robot.stop();
-    delay(100);
-    robot.angleMovement(15);
-    delay(100);
-    robot.stop();
-    delay(100);
+    robot.followBall();
 }
 
 void loop()

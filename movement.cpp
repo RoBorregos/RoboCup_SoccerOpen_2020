@@ -6,7 +6,7 @@ Movements::Movements()
   front_left_motor_ = Motor(frontLeftMotorPins[0], frontLeftMotorPins[1], frontLeftPwm);
   front_right_motor_ = Motor(frontRightMotorPins[0], frontRightMotorPins[1], frontRightPwm);
   back_left_motor_ = Motor(backLeftMotorPins[0], backLeftMotorPins[1], backLeftPwm);
-  back_Right_motor_ = Motor(backRightMotorPins[0], backRightMotorPins[1], backRightPwm);
+  back_right_motor_ = Motor(backRightMotorPins[0], backRightMotorPins[1], backRightPwm);
 }
 
 void Movements::move0()
@@ -81,7 +81,7 @@ void Movements::move315()
   back_right_motor_.stop();
 }
 
-void Movements::setSpeed(float data)
+void Movements::setSpeed(int data)
 {
   front_left_motor_.changePwm(data);
   front_right_motor_.changePwm(data);
@@ -144,9 +144,12 @@ void Movements::angleMovement(int angle)
   }
   //Convert the angle to radians.
   float gradRadian = (realAngle * pi) / 180;
+  //Make calculations
+  float angleSin = sin(gradRadian);
+  float angleCos = cos(gradRadian);
   //Variables for the resulting pwm of the function.
-  float pwmM1M3 = 230 * sin(gradRadian);
-  float pwmM2M4 = 230 * cos(gradRadian);
+  int pwmM1M3 = 230 * angleSin;
+  int pwmM2M4 = 230 * angleCos;
   //If the pwm is negative, this bools will be used to tell the motor to go backwards.
   bool orientationM1M3 = 0, orientationM2M4 = 0;
 
